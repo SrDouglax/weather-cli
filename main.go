@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"strings"
@@ -9,8 +10,11 @@ import (
 
 func main() {
 
+	// Parse args
+	flag.Parse()
+
 	// Get user query
-	var local string = strings.Join(os.Args[1:], " ")
+	var local string = strings.Join(flag.Args(), " ")
 
 	// Hint if not provide query
 	if len(os.Args) < 2 {
@@ -27,7 +31,12 @@ func main() {
 		return
 	}
 
-	fmt.Println("Getting weather...")
+	if len(coord) == 0 {
+		fmt.Printf("Place not found, try again with another name.")
+		return
+	}
+
+	fmt.Println("Getting Weather...")
 
 	// Get weather data based on lat/lon
 	weather, err := requests.GetWeather(coord[0])
