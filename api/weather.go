@@ -1,9 +1,10 @@
-package requests
+package api
 
 import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"weather-cli/constants"
 )
 
 type WeatherData struct {
@@ -11,7 +12,7 @@ type WeatherData struct {
 }
 
 func GetWeather(local Localization) (WeatherData, error) {
-	apiUrl := fmt.Sprintf(`https://api.open-meteo.com/v1/forecast?latitude=%f&longitude=%f&current_weather=true&timezone=auto`, local.Latitude, local.Longitude)
+	apiUrl := fmt.Sprintf(constants.OM_API_URL+"/forecast?latitude=%f&longitude=%f&current_weather=true&timezone=auto", local.Latitude, local.Longitude)
 	// fmt.Println("Weather URL Debug:", apiUrl)
 
 	res, err := http.Get(apiUrl)

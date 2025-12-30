@@ -3,29 +3,34 @@ package main
 import (
 	"flag"
 	"fmt"
-	"os"
 	"strings"
-	"weather-cli/requests"
+	"weather-cli/api"
+	"weather-cli/utils"
 )
 
 func main() {
 
+	// Define args
+	formatPtr := flag.String("format", "txt", "ex: json, txt")
+
 	// Parse args
 	flag.Parse()
-
-	// Get user query
-	var local string = strings.Join(flag.Args(), " ")
+	args := flag.Args()
 
 	// Hint if not provide query
-	if len(os.Args) < 2 {
+	if len(args) == 0 {
 		fmt.Println("Use: go run main.go <query>")
 		return
 	}
 
+	// Get user query and other params
+	local := strings.Join(args, " ")
+	format := *formatPtr
+
 	fmt.Println("Getting Coordinates...")
 
 	// Get lat/lon from local query
-	coord, err := requests.GetLocalCoordinates(local)
+	coord, err := api.GetLocalCoordinates(local)
 	if err != nil {
 		fmt.Printf("[Main]: %v\n", err)
 		return
@@ -39,12 +44,17 @@ func main() {
 	fmt.Println("Getting Weather...")
 
 	// Get weather data based on lat/lon
-	weather, err := requests.GetWeather(coord[0])
+	weather, err := api.GetWeather(coord[0])
 	if err != nil {
 		fmt.Printf("[Main]: %v\n", err)
 		return
 	}
 
 	// Print results
-	fmt.Printf("\nTemperature: %v°\n", weather.Temperature)
+	switch format {
+	case "txt":
+		fmt.Printf("\nTemperature: %v°\n", weather.Temperature)
+	case "json":
+		fmt.Printf("\n%v\n", utils.StructToString(weather))
+	}
 }

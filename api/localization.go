@@ -1,10 +1,11 @@
-package requests
+package api
 
 import (
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
+	"weather-cli/constants"
 )
 
 type Localization struct {
@@ -16,7 +17,7 @@ type Localization struct {
 
 func GetLocalCoordinates(query string) ([]Localization, error) {
 	encodedQuery := url.QueryEscape(query)
-	apiUrl := fmt.Sprintf(`https://geocoding-api.open-meteo.com/v1/search?name=%s&count=1&language=pt&format=json`, encodedQuery)
+	apiUrl := fmt.Sprintf(constants.OM_GEOCODING_URL+`/search?name=%s&count=1&language=pt&format=json`, encodedQuery)
 	// fmt.Println("URL Debug:", apiUrl)
 
 	res, err := http.Get(apiUrl)
