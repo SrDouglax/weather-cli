@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
-	"wheater-cli/requests"
+	"weather-cli/requests"
 )
 
 func main() {
@@ -27,15 +27,15 @@ func main() {
 		return
 	}
 
-	fmt.Println("Getting Wheater...")
+	fmt.Println("Getting weather...")
 
-	// Get wheater data based on lat/lon
-	wheater, err := requests.GetWheater(coord[0])
+	// Get weather data based on lat/lon
+	weather, err := requests.GetWeather(coord[0])
 	if err != nil {
 		fmt.Printf("[Main]: %v\n", err)
 		return
 	}
 
 	// Print results
-	fmt.Printf("\nTemperature: %v°\n", wheater.Temperature)
+	fmt.Printf("\nTemperature: %v°\n", weather.Temperature)
 }

@@ -27,7 +27,7 @@ go run main.go Recife
 **Output:**
 ```
 Getting Coordinates...
-Getting Wheater...
+Getting weather...
 
 Temperature: 25.3°
 ```
@@ -36,4 +36,4 @@ Temperature: 25.3°
 
 - `main.go`: Entry point of the application. Handles CLI arguments and orchestration.
 - `requests/localization.go`: Handles geocoding requests to convert city names to latitude/longitude.
-- `requests/wheater.go`: Handles weather requests to fetch weather data.
+- `requests/weather.go`: Handles weather requests to fetch weather data.
